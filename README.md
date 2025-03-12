@@ -1,16 +1,19 @@
-## Hi there 👋
+# Hi there, I'm Tom Nguyen 👋  
 
-<!--
-**totto312/totto312** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+## 🚀 About Me  
+I'm a third year **Computer Science student** majoring in **Artificial Intelligence** and minoring in **Cloud Computing**. Currently, I'm a **Software Engineer Intern (Platforms)** at **annalise.ai**.
 
-Here are some ideas to get you started:
+## 🌱 Currently Learning  
+- **Golang** for backend services  
+- Cloud security & **IAM best practices**  
+- Building scalable systems in AWS  
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🏗️ Projects  
+- **🧮 Math Game App** – Brain-training game for seniors
+
+## 📫 Get in Touch  
+- Portfolio: [totto312.github.io](#) (Updates Coming Soon 🚧)  
+- LinkedIn: [https://www.linkedin.com/in/tom-nguyen25/](#)  
+- GitHub: [github.com/totto312](#)  
+
+💡 *Always looking to learn, collaborate, and build cool stuff!*  
