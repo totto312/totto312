@@ -42,13 +42,25 @@ jobs:
 
           # Extract the next 6 forecasted times (3-hour intervals)
           forecast=$(echo "$response" | jq -r '
-            [ .list 
-              | map(select(.dt_txt | endswith("09:00:00") or endswith("12:00:00") or endswith("15:00:00") or endswith("18:00:00") or endswith("21:00:00"))) 
-              | .[:5] # Keep only the first 5 (today's forecast)
-              | map("\( ( .dt_txt[11:16] | sub("^09"; "9AM") | sub("^12"; "12PM") | sub("^15"; "3PM") | sub("^18"; "6PM") | sub("^21"; "9PM") )): \( (.main.temp | round) )°C, \(.weather[0].description)")
+            [ .list
+              | map(select(
+                  .dt_txt | test("09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
+                ))
+              | .[:5] # Keep only the first 5 entries (today's forecast)
+              | map(
+                  "\(
+                    if .dt_txt[11:16] == "09:00" then "9AM"
+                    elif .dt_txt[11:16] == "12:00" then "12PM"
+                    elif .dt_txt[11:16] == "15:00" then "3PM"
+                    elif .dt_txt[11:16] == "18:00" then "6PM"
+                    elif .dt_txt[11:16] == "21:00" then "9PM"
+                    else .dt_txt[11:16] 
+                    end
+                  ): \( (.main.temp | round) )°C, \(.weather[0].description)"
+                )
               | join("\n")
             ] | .[0]')
-            
+
           # Debug: Print the fetched data
           echo "Fetched forecast:"
           echo "$forecast"
