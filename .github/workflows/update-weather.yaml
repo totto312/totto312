@@ -2,7 +2,7 @@ name: Update Weather
 
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 19 * * *" # Runs at 6 AM Sydney time (UTC+11)
   workflow_dispatch:
 
 jobs:
@@ -40,16 +40,17 @@ jobs:
             exit 1
           fi
 
-          # Extract the next 6 forecasted times (3-hour intervals)
+          # Extract the next 6 forecasted times (3-hour intervals) starting from 6 AM
           forecast=$(echo "$response" | jq -r '
             [ .list
               | map(select(
-                  .dt_txt | test("09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
+                  .dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
                 ))
-              | .[:5] # Keep only the first 5 entries (today's forecast)
+              | .[:6] # Keep the first 6 entries (today's forecast)
               | map(
                   "\(
-                    if .dt_txt[11:16] == "09:00" then "9AM"
+                    if .dt_txt[11:16] == "06:00" then "6AM"
+                    elif .dt_txt[11:16] == "09:00" then "9AM"
                     elif .dt_txt[11:16] == "12:00" then "12PM"
                     elif .dt_txt[11:16] == "15:00" then "3PM"
                     elif .dt_txt[11:16] == "18:00" then "6PM"
