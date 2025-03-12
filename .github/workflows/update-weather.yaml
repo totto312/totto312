@@ -43,19 +43,29 @@ jobs:
           # Extract the next 6 forecasted times (3-hour intervals)
           forecast=$(echo "$response" | jq -r '[.list[:6] | map("\(.dt_txt): \(.main.temp)°C, \(.weather[0].description)") | join("\n")] | .[0]')
 
-          # Store in GitHub environment using <<EOF syntax for multiline values
-          {
-            echo "weather_info<<EOF"
-            echo "$forecast"
-            echo "EOF"
-          } >> "$GITHUB_ENV"
+          # Debug: Print the fetched data
+          echo "Fetched forecast:"
+          echo "$forecast"
+
+          # Store in a temporary file for later usage
+          echo "$forecast" > weather.txt
 
       - name: Update README
         run: |
-          weather_info="${{ env.weather_info }}"
-          weather_block=$(printf "<!-- WEATHER:START -->\n\`\`\`\n%s\n\`\`\`\n<!-- WEATHER:END -->" "$weather_info")
-          echo "$weather_block" > temp_readme.md
-          awk 'NR==FNR{a[n++]=$0; next} /<!-- WEATHER:START -->/{print a[0]; next} /<!-- WEATHER:END -->/{print a[1]; next} 1' temp_readme.md README.md > updated_readme.md
+          # Read weather data from file
+          weather_info=$(cat weather.txt)
+
+          # Create the new weather block
+          echo -e "<!-- WEATHER:START -->\n\`\`\`\n$weather_info\n\`\`\`\n<!-- WEATHER:END -->" > temp_weather.md
+
+          # Replace the weather block in README.md
+          awk '
+          BEGIN { inside=0 }
+          /<!-- WEATHER:START -->/ { print; system("cat temp_weather.md"); inside=1; next }
+          /<!-- WEATHER:END -->/ { inside=0 }
+          !inside { print }
+          ' README.md > updated_readme.md
+
           mv updated_readme.md README.md
 
       - name: Commit and push changes
