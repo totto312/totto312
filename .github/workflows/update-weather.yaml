@@ -46,7 +46,7 @@ jobs:
               | map(select(
                   .dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
                 ))
-              | .[:6] # Keep the first 6 entries (today's forecast)
+              | .[:6]
               | map(
                   "\(
                     if .dt_txt[11:16] == "06:00" then "6AM"
