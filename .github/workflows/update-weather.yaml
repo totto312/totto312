@@ -29,7 +29,9 @@ jobs:
           API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
           CITY="Sydney"
-          WEATHER_URL="https://api.openweathermap.org/data/2.5/forecast?lat=-33.8688&lon=151.2093&appid=${API_KEY}&units=metric"
+          LAT="-33.8688"
+          LON="151.2093"
+          WEATHER_URL="http://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric"
 
           # Fetch weather data
           response=$(curl -s "$WEATHER_URL")
@@ -38,20 +40,16 @@ jobs:
             exit 1
           fi
 
-          temperature=$(echo "$response" | jq '.list[0].main.temp')
-          description=$(echo "$response" | jq -r '.list[0].weather[0].description')
-          icon=$(echo "$response" | jq -r '.list[0].weather[0].icon')
+          # Extract the next 6 forecasted times (3-hour intervals)
+          forecast=$(echo "$response" | jq -r '[.list[:6] | map("\(.dt_txt): \(.main.temp)°C, \(.weather[0].description)") | join("\n")] | .[0]')
 
-          # Format weather information
-          weather_info="![Weather Icon](http://openweathermap.org/img/wn/${icon}@2x.png) **${temperature}°C, ${description}**"
-
-          # Output the weather info
-          echo "weather_info=${weather_info}" >> "$GITHUB_ENV"
+          # Store in GitHub environment
+          echo "weather_info=${forecast}" >> "$GITHUB_ENV"
 
       - name: Update README
         run: |
-          sed -i "/<!-- WEATHER:START -->/,/<!-- WEATHER:END -->/c\
-          <!-- WEATHER:START -->\n${weather_info}\n<!-- WEATHER:END -->" README.md
+          sed -i '/<!-- WEATHER:START -->/,/<!-- WEATHER:END -->/c\
+          <!-- WEATHER:START -->\n```\n${{ env.weather_info }}\n```\n<!-- WEATHER:END -->' README.md
 
       - name: Commit and push changes
         env:
