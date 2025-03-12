@@ -7,62 +7,48 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 <!-- WEATHER:START -->
 <!-- WEATHER:START -->
 ```
-9: 24°C, few clouds
-12PM: 23°C, few clouds
-3PM: 20°C, clear sky
-6PM: 20°C, clear sky
-9PM: 20°C, clear sky
-9: 23°C, clear sky
-12PM: 23°C, clear sky
-3PM: 22°C, scattered clouds
-6PM: 22°C, broken clouds
-9PM: 22°C, clear sky
-9: 25°C, overcast clouds
-12PM: 25°C, overcast clouds
-3PM: 23°C, broken clouds
-6PM: 22°C, broken clouds
-9PM: 23°C, overcast clouds
-9: 25°C, few clouds
-12PM: 25°C, broken clouds
-3PM: 25°C, overcast clouds
-6PM: 24°C, overcast clouds
-9PM: 24°C, overcast clouds
-9: 30°C, broken clouds
-12PM: 29°C, scattered clouds
-3PM: 27°C, clear sky
+6AM: 26°C, clear sky
+9AM: 23°C, clear sky
+12PM: 22°C, clear sky
+3PM: 22°C, clear sky
 6PM: 21°C, clear sky
-9PM: 20°C, broken clouds
+9PM: 22°C, clear sky
 ```
 <!-- WEATHER:END -->
 <!-- WEATHER:START -->
 <!-- WEATHER:START -->
 ```
-9: 24°C, few clouds
-12PM: 23°C, few clouds
-3PM: 20°C, clear sky
-6PM: 20°C, clear sky
-9PM: 20°C, clear sky
-9: 23°C, clear sky
-12PM: 23°C, clear sky
-3PM: 22°C, scattered clouds
-6PM: 22°C, broken clouds
-9PM: 22°C, clear sky
-9: 25°C, overcast clouds
-12PM: 25°C, overcast clouds
-3PM: 23°C, broken clouds
-6PM: 22°C, broken clouds
-9PM: 23°C, overcast clouds
-9: 25°C, few clouds
-12PM: 25°C, broken clouds
-3PM: 25°C, overcast clouds
-6PM: 24°C, overcast clouds
-9PM: 24°C, overcast clouds
-9: 30°C, broken clouds
-12PM: 29°C, scattered clouds
-3PM: 27°C, clear sky
+6AM: 26°C, clear sky
+9AM: 23°C, clear sky
+12PM: 22°C, clear sky
+3PM: 22°C, clear sky
 6PM: 21°C, clear sky
-9PM: 20°C, broken clouds
+9PM: 22°C, clear sky
 ```
+<!-- WEATHER:END -->
+<!-- WEATHER:END -->
+<!-- WEATHER:START -->
+<!-- WEATHER:START -->
+```
+6AM: 26°C, clear sky
+9AM: 23°C, clear sky
+12PM: 22°C, clear sky
+3PM: 22°C, clear sky
+6PM: 21°C, clear sky
+9PM: 22°C, clear sky
+```
+<!-- WEATHER:END -->
+<!-- WEATHER:START -->
+<!-- WEATHER:START -->
+```
+6AM: 26°C, clear sky
+9AM: 23°C, clear sky
+12PM: 22°C, clear sky
+3PM: 22°C, clear sky
+6PM: 21°C, clear sky
+9PM: 22°C, clear sky
+```
+<!-- WEATHER:END -->
 <!-- WEATHER:END -->
 <!-- WEATHER:END -->
 <!-- WEATHER:END -->
