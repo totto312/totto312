@@ -41,7 +41,12 @@ jobs:
           fi
 
           # Extract the next 6 forecasted times (3-hour intervals)
-          forecast=$(echo "$response" | jq -r '[.list[:6] | map("\(.dt_txt): \(.main.temp)°C, \(.weather[0].description)") | join("\n")] | .[0]')
+          forecast=$(echo "$response" | jq -r '
+            [ .list | map(select(.dt_txt | endswith("09:00:00") or endswith("12:00:00") or endswith("15:00:00") or endswith("18:00:00") or endswith("21:00:00")))
+              | map("\( ( .dt_txt[11:16] | sub(":00$"; "") | sub("^0"; "") | gsub("09"; "9AM") | gsub("12"; "12PM") | gsub("15"; "3PM") | gsub("18"; "6PM") | gsub("21"; "9PM") )): \( (.main.temp | round) )°C, \(.weather[0].description)")
+              | join("\n")
+            ] | .[0]')
+
 
           # Debug: Print the fetched data
           echo "Fetched forecast:"
