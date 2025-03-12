@@ -6,7 +6,7 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 ## 🌤️ Today's Weather
 <!-- WEATHER:START -->
 ![Weather Icon](http://openweathermap.org/img/wn/10d@2x.png) **24.69°C, light rain**
-<!-- WEATHER:END -->
+```
 
 ## 🌱 Currently Learning  
 - **Golang** for backend services  
