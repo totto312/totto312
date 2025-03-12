@@ -52,7 +52,7 @@ jobs:
 
       - name: Update README
         run: |
-          printf -v weather_block "<!-- WEATHER:START -->\n\`\`\`\n%s\n\`\`\`\n<!-- WEATHER:END -->" "${{ env.weather_info }}"
+          weather_block="<!-- WEATHER:START -->"$'\n'"```"$'\n'"${{ env.weather_info }}"$'\n'"```"$'\n'"<!-- WEATHER:END -->"
           sed -i "/<!-- WEATHER:START -->/,/<!-- WEATHER:END -->/c\\
           $weather_block" README.md
 
