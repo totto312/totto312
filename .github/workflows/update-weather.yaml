@@ -40,14 +40,21 @@ jobs:
             exit 1
           fi
 
-          # Extract the next 6 forecasted times (3-hour intervals)
-          forecast=$(echo "$response" | jq -r '[.list[:6] | map("\(.dt_txt): \(.main.temp)°C, \(.weather[0].description)") | join("\n")] | .[0]')
+          # Convert UTC timestamps to Sydney time
+          forecast=$(echo "$response" | jq -r '
+            .list[:6] | 
+            map(
+              (.dt | strftime("%Y-%m-%d %H:%M:%S UTC") + " -> " + 
+              (.dt | tonumber + 39600 | strftime("%Y-%m-%d %H:%M:%S %Z")) + ": " +
+              (.main.temp|tostring) + "°C, " + .weather[0].description)
+            ) | join("\n")
+          ')
 
-          # Debug: Print the fetched data
-          echo "Fetched forecast:"
+          # Debug output
+          echo "Fetched Forecast (Converted to Sydney Time):"
           echo "$forecast"
 
-          # Store in a temporary file for later usage
+          # Store in file
           echo "$forecast" > weather.txt
 
       - name: Update README
