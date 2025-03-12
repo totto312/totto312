@@ -43,8 +43,12 @@ jobs:
           # Extract the next 6 forecasted times (3-hour intervals)
           forecast=$(echo "$response" | jq -r '[.list[:6] | map("\(.dt_txt): \(.main.temp)°C, \(.weather[0].description)") | join("\n")] | .[0]')
 
-          # Store in GitHub environment
-          echo "weather_info=${forecast}" >> "$GITHUB_ENV"
+          # Store in GitHub environment using <<EOF syntax for multiline values
+          {
+            echo "weather_info<<EOF"
+            echo "$forecast"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - name: Update README
         run: |
