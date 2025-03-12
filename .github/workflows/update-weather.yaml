@@ -52,9 +52,11 @@ jobs:
 
       - name: Update README
         run: |
-          weather_block="<!-- WEATHER:START -->"$'\n'"```"$'\n'"${{ env.weather_info }}"$'\n'"```"$'\n'"<!-- WEATHER:END -->"
-          sed -i "/<!-- WEATHER:START -->/,/<!-- WEATHER:END -->/c\\
-          $weather_block" README.md
+          weather_info="${{ env.weather_info }}"
+          weather_block=$(printf "<!-- WEATHER:START -->\n\`\`\`\n%s\n\`\`\`\n<!-- WEATHER:END -->" "$weather_info")
+          echo "$weather_block" > temp_readme.md
+          awk 'NR==FNR{a[n++]=$0; next} /<!-- WEATHER:START -->/{print a[0]; next} /<!-- WEATHER:END -->/{print a[1]; next} 1' temp_readme.md README.md > updated_readme.md
+          mv updated_readme.md README.md
 
       - name: Commit and push changes
         env:
