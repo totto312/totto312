@@ -1,0 +1,70 @@
+name: Update Weather
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install requests
+          sudo apt-get update && sudo apt-get install -y jq  # Ensure jq is available
+
+      - name: Fetch weather data
+        id: weather
+        env:
+          API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+        run: |
+          CITY="Sydney"
+          WEATHER_URL="https://api.openweathermap.org/data/2.5/forecast?lat=-33.8688&lon=151.2093&appid=${API_KEY}&units=metric"
+
+          # Fetch weather data
+          response=$(curl -s "$WEATHER_URL")
+          if [[ $(echo "$response" | jq -r '.cod') -ne 200 ]]; then
+            echo "Failed to fetch weather data"
+            exit 1
+          fi
+
+          temperature=$(echo "$response" | jq '.list[0].main.temp')
+          description=$(echo "$response" | jq -r '.list[0].weather[0].description')
+          icon=$(echo "$response" | jq -r '.list[0].weather[0].icon')
+
+          # Format weather information
+          weather_info="![Weather Icon](http://openweathermap.org/img/wn/${icon}@2x.png) **${temperature}°C, ${description}**"
+
+          # Output the weather info
+          echo "weather_info=${weather_info}" >> "$GITHUB_ENV"
+
+      - name: Update README
+        run: |
+          sed -i "/<!-- WEATHER:START -->/,/<!-- WEATHER:END -->/c\
+          <!-- WEATHER:START -->\n${weather_info}\n<!-- WEATHER:END -->" README.md
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git add README.md
+          git commit -m "Update weather information"
+          git push

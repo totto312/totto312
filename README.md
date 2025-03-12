@@ -3,6 +3,11 @@
 ## 🚀 About Me  
 I'm a third year **Computer Science student** majoring in **Artificial Intelligence** and minoring in **Cloud Computing**. Currently, I'm a **Software Engineer Intern (Platforms)** at **annalise.ai**.
 
+## 🌤️ Today's Weather
+<!-- WEATHER:START -->
+
+<!-- WEATHER:END -->
+
 ## 🌱 Currently Learning  
 - **Golang** for backend services  
 - Cloud security & **IAM best practices**  
