@@ -64,7 +64,7 @@ jobs:
 
           # Print only the first 6 lines of the forecast
           echo "Fetched forecast:"
-          echo "$forecast" | head -n 6
+          echo "$forecast"
 
           # Store in a temporary file for later usage
           echo "$forecast" > weather.txt
@@ -72,7 +72,7 @@ jobs:
       - name: Update README
         run: |
           # Read weather data from file
-          weather_info=$(cat weather.txt)
+          weather_info=$(head -n 6 weather.txt)
 
           # Create the new weather block
           echo -e "<!-- WEATHER:START -->\n\`\`\`\n$weather_info\n\`\`\`\n<!-- WEATHER:END -->" > temp_weather.md
