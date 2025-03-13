@@ -47,7 +47,7 @@ jobs:
           forecast=$(echo "$response" | jq -r --arg first_date "$first_date" '
             [ .list
               | map(select(
-                  .dt_txt | startswith($first_date) and
+                  (.dt_txt | startswith($first_date)) and
                   (.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
                 ))
               | .[:6]
