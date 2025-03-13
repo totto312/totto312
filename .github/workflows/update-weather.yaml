@@ -40,33 +40,27 @@ jobs:
             exit 1
           fi
 
-          # Extract the date of the first entry (first day)
-          first_date=$(echo "$response" | jq -r '.list[0].dt_txt | split(" ")[0]')
-
-          # Extract the next 6 forecasted times (3-hour intervals) for the first day
-          forecast=$(echo "$response" | jq -r --arg first_date "$first_date" '
-            .list
-            | map(select(
-                .dt_txt | startswith($first_date) and
-                (.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
-              )))
-            | .[:6]
-            | map(
-                "\(
-                  (.dt_txt | split(" ") | .[1]) as $time |
-                  if $time == "06:00:00" then "6AM"
-                  elif $time == "09:00:00" then "9AM"
-                  elif $time == "12:00:00" then "12PM"
-                  elif $time == "15:00:00" then "3PM"
-                  elif $time == "18:00:00" then "6PM"
-                  elif $time == "21:00:00" then "9PM"
-                  else $time
-                  end
-                ): \( (.main.temp | round) )°C, \(.weather[0].description)"
-              )
-            | join("\n")
-          ')
-
+          # Extract the next 6 forecasted times (3-hour intervals) starting from 6 AM
+          forecast=$(echo "$response" | jq -r '
+            [ .list
+              | map(select(
+                  .dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")
+                ))
+              | .[:6]
+              | map(
+                  "\(
+                    if .dt_txt[11:16] == "06:00" then "6AM"
+                    elif .dt_txt[11:16] == "09:00" then "9AM"
+                    elif .dt_txt[11:16] == "12:00" then "12PM"
+                    elif .dt_txt[11:16] == "15:00" then "3PM"
+                    elif .dt_txt[11:16] == "18:00" then "6PM"
+                    elif .dt_txt[11:16] == "21:00" then "9PM"
+                    else .dt_txt[11:16] 
+                    end
+                  ): \( (.main.temp | round) )°C, \(.weather[0].description)"
+                )
+              | join("\n")
+            ] | .[0]')
 
           # Debug: Print the fetched data
           echo "Fetched forecast:"
