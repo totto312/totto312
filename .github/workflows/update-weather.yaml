@@ -62,9 +62,9 @@ jobs:
               | join("\n")
             ] | .[0]')
 
-          # Debug: Print the fetched data
+          # Print only the first 6 lines of the forecast
           echo "Fetched forecast:"
-          echo "$forecast"
+          echo "$forecast" | head -n 6
 
           # Store in a temporary file for later usage
           echo "$forecast" > weather.txt
