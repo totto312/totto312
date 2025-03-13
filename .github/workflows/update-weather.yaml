@@ -36,20 +36,14 @@ jobs:
           # Fetch weather data
           response=$(curl -s "$WEATHER_URL")
           if [[ $(echo "$response" | jq -r '.cod') -ne 200 ]]; then
-            echo "Failed to fetch weather data: $(echo "$response" | jq -r '.message')"
+            echo "Failed to fetch weather data"
             exit 1
           fi
 
-          # Get today's date in the same format as the API response (YYYY-MM-DD)
-          TODAY=$(date -u +"%Y-%m-%d")
-
-          # Extract today's forecast for specific times (6 AM, 9 AM, 12 PM, 3 PM, 6 PM, 9 PM)
+          # Extract only the first 6 forecasted times (3-hour intervals)
           forecast=$(echo "$response" | jq -r '
             [ .list
-              | map(select(
-                  (.dt_txt | startswith($today)) and
-                  (.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$"))
-                ))
+              | limit(6; .[])  # Take only the first 6 entries
               | map(
                   "\(
                     if .dt_txt[11:16] == "06:00" then "6AM"
@@ -63,7 +57,7 @@ jobs:
                   ): \( (.main.temp | round) )°C, \(.weather[0].description)"
                 )
               | join("\n")
-            ] | .[0]' --arg today "$TODAY")
+            ] | .[0]')
 
           # Debug: Print the fetched data
           echo "Fetched forecast:"
