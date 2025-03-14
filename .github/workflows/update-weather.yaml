@@ -72,10 +72,10 @@ jobs:
       - name: Update README
         run: |
           # Read weather data from file
-          weather_info=$(head -n 6 weather.txt)
+                    weather_info=$(head -n 6 weather.txt)
 
-          # Create the new weather block
-          echo -e "<!-- WEATHER:START -->\n\`\`\`\n$weather_info\n\`\`\`\n<!-- WEATHER:END -->" > temp_weather.md
+          # Store only the weather info in a temporary file
+          echo -e "```\n$weather_info\n```" > temp_weather.md
 
           # Replace the weather block in README.md
           awk '

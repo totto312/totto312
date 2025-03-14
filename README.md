@@ -5,7 +5,6 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 
 ## 🌤️ Today's Weather
 <!-- WEATHER:START -->
-<!-- WEATHER:START -->
 ```
 6AM: 28°C, scattered clouds
 9AM: 25°C, overcast clouds
@@ -14,7 +13,6 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 6PM: 23°C, overcast clouds
 9PM: 23°C, overcast clouds
 ```
-<!-- WEATHER:END -->
 <!-- WEATHER:END -->
 
 ## 🌱 Currently Learning  
