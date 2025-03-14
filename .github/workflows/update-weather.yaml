@@ -72,7 +72,7 @@ jobs:
       - name: Update README
         run: |
           # Read weather data from file
-                    weather_info=$(head -n 6 weather.txt)
+          weather_info=$(head -n 6 weather.txt)
 
           # Store only the weather info in a temporary file
           echo -e "```\n$weather_info\n```" > temp_weather.md
