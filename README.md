@@ -5,52 +5,6 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 
 ## 🌤️ Today's Weather
 <!-- WEATHER:START -->
-<!-- WEATHER:START -->
-```
-6AM: 26°C, clear sky
-9AM: 23°C, clear sky
-12PM: 22°C, clear sky
-3PM: 22°C, clear sky
-6PM: 21°C, clear sky
-9PM: 22°C, clear sky
-```
-<!-- WEATHER:END -->
-<!-- WEATHER:START -->
-<!-- WEATHER:START -->
-```
-6AM: 26°C, clear sky
-9AM: 23°C, clear sky
-12PM: 22°C, clear sky
-3PM: 22°C, clear sky
-6PM: 21°C, clear sky
-9PM: 22°C, clear sky
-```
-<!-- WEATHER:END -->
-<!-- WEATHER:END -->
-<!-- WEATHER:START -->
-<!-- WEATHER:START -->
-```
-6AM: 26°C, clear sky
-9AM: 23°C, clear sky
-12PM: 22°C, clear sky
-3PM: 22°C, clear sky
-6PM: 21°C, clear sky
-9PM: 22°C, clear sky
-```
-<!-- WEATHER:END -->
-<!-- WEATHER:START -->
-<!-- WEATHER:START -->
-```
-6AM: 26°C, clear sky
-9AM: 23°C, clear sky
-12PM: 22°C, clear sky
-3PM: 22°C, clear sky
-6PM: 21°C, clear sky
-9PM: 22°C, clear sky
-```
-<!-- WEATHER:END -->
-<!-- WEATHER:END -->
-<!-- WEATHER:END -->
 <!-- WEATHER:END -->
 
 ## 🌱 Currently Learning  
