@@ -72,19 +72,20 @@ jobs:
       - name: Update README
         run: |
           # Read weather data from file
-          weather_info=$(head -n 6 weather.txt)
+          weather_info=$(cat weather.txt)
 
-          # Store only the weather info in a temporary file
-          echo -e "```\n$weather_info\n```" > temp_weather.md
+          # Create the new weather block
+          echo -e "<!-- WEATHER:START -->\n\`\`\`\n$weather_info\n\`\`\`\n<!-- WEATHER:END -->" > temp_weather.md
 
           # Replace the weather block in README.md
           awk '
           BEGIN { inside=0 }
-          /<!-- WEATHER:START -->/ { print; system("cat temp_weather.md"); inside=1; next }
-          /<!-- WEATHER:END -->/ { inside=0 }
+          /<!-- WEATHER:START -->/ { inside=1; system("cat temp_weather.md"); next }
+          /<!-- WEATHER:END -->/ { inside=0; next }
           !inside { print }
           ' README.md > updated_readme.md
 
+          # Replace the original README.md with the updated version
           mv updated_readme.md README.md
 
       - name: Commit and push changes
