@@ -13,18 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-
       - name: Install dependencies
         run: |
-          python -m pip install requests
-          sudo apt-get update && sudo apt-get install -y jq  # Ensure jq is available
+          sudo apt-get update && sudo apt-get install -y jq
 
       - name: Fetch weather data
-        id: weather
         env:
           API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
@@ -33,65 +26,32 @@ jobs:
           LON="151.2093"
           WEATHER_URL="http://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric"
 
-          # Fetch weather data
           response=$(curl -s "$WEATHER_URL")
 
           # Validate response
-          if ! echo "$response" | jq empty; then
-            echo "Error: Invalid JSON response"
-            exit 1
-          fi
-
           if [[ $(echo "$response" | jq -r '.cod') -ne 200 ]]; then
             echo "Failed to fetch weather data"
             exit 1
           fi
 
-          # Extract forecasts starting from the next 6 AM onward
-          forecast=$(echo "$response" | jq -r '
-            [ .list
-              | map(select(.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")))
-              | sort_by(.dt | tonumber)
-            ]
-            | map(
-                "\(
-                  if .dt_txt[11:16] == "06:00" then "6AM"
-                  elif .dt_txt[11:16] == "09:00" then "9AM"
-                  elif .dt_txt[11:16] == "12:00" then "12PM"
-                  elif .dt_txt[11:16] == "15:00" then "3PM"
-                  elif .dt_txt[11:16] == "18:00" then "6PM"
-                  elif .dt_txt[11:16] == "21:00" then "9PM"
-                  else .dt_txt[11:16] 
-                  end
-                ): \( (.main.temp | round) )°C, \(.weather[0].description // "No data")"
-              )
-            | join("\n")
-            | capture("(?s)(6AM:.*)")  # Find first 6AM and extract from there
-            | split("\n")[:6]  # Take next 6 entries
-            | join("\n")
-          ')
+          # Extract the next 6 time slots from 6 AM onwards
+          echo "$response" | jq -r '
+            .list | map(select(.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")))[:6] |
+            map("\(.dt_txt[11:16]): \(.main.temp | round)°C, \(.weather[0].description // "No data")") |
+            join("\n")
+          ' > weather.txt
 
-          # Print fetched forecast
-          echo "Fetched forecast:"
-          echo "$forecast"
-
-          # Store in a temporary file for later usage
-          echo "$forecast" > weather.txt
+          cat weather.txt
 
       - name: Update README
         run: |
-          # Read weather data from file
-          weather_info=$(cat weather.txt)
-
-          # Directly replace the weather block in README.md
           awk '
           BEGIN { inside=0 }
-          /<!-- WEATHER:START -->/ { inside=1; print weather_info; next }
-          /<!-- WEATHER:END -->/ { inside=0; next }
+          /<!-- WEATHER:START -->/ { inside=1; print $0; while ((getline < "weather.txt") > 0) print; next }
+          /<!-- WEATHER:END -->/ { inside=0 }
           !inside { print }
-          ' weather_info="$weather_info" README.md > updated_readme.md
+          ' README.md > updated_readme.md
 
-          # Replace the original README.md with the updated version
           mv updated_readme.md README.md
 
       - name: Commit and push changes
