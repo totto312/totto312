@@ -35,6 +35,13 @@ jobs:
 
           # Fetch weather data
           response=$(curl -s "$WEATHER_URL")
+
+          # Validate response
+          if ! echo "$response" | jq empty; then
+            echo "Error: Invalid JSON response"
+            exit 1
+          fi
+
           if [[ $(echo "$response" | jq -r '.cod') -ne 200 ]]; then
             echo "Failed to fetch weather data"
             exit 1
@@ -44,7 +51,7 @@ jobs:
           forecast=$(echo "$response" | jq -r '
             [ .list
               | map(select(.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")))
-              | sort_by(.dt)
+              | sort_by(.dt | tonumber)
             ]
             | map(
                 "\(
@@ -56,11 +63,11 @@ jobs:
                   elif .dt_txt[11:16] == "21:00" then "9PM"
                   else .dt_txt[11:16] 
                   end
-                ): \( (.main.temp | round) )°C, \(.weather[0].description)"
+                ): \( (.main.temp | round) )°C, \(.weather[0].description // "No data")"
               )
             | join("\n")
-            | capture("(?s)(6AM:.*)")
-            | split("\n")[:6]
+            | capture("(?s)(6AM:.*)")  # Find first 6AM and extract from there
+            | split("\n")[:6]  # Take next 6 entries
             | join("\n")
           ')
 
