@@ -5,12 +5,12 @@ I'm a third year **Computer Science student** majoring in **Artificial Intellige
 
 ## 🌤️ Today's Weather
 <!-- WEATHER:START -->
-- 21:00: 17°C, light rain
-- 06:00: 21°C, light rain
-- 09:00: 19°C, light rain
-- 12:00: 18°C, scattered clouds
-- 15:00: 18°C, clear sky
-- 18:00: 18°C, few clouds
+- 21:00: 18°C, scattered clouds
+- 06:00: 21°C, scattered clouds
+- 09:00: 21°C, few clouds
+- 12:00: 21°C, few clouds
+- 15:00: 19°C, scattered clouds
+- 18:00: 18°C, broken clouds
 
 <!-- WEATHER:END -->
 
