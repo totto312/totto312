@@ -2,9 +2,9 @@
 
 # Hey, I'm Tom Nguyen
 
-**Graduate Software Engineer** @ [harrison.ai](https://harrison.ai)
+**Software Engineer** @ [harrison.ai](https://harrison.ai)
 
-Building reliable platforms and tinkering with AI on the side.
+Software engineer with experience and a keen interest in platforms.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tom-nguyen25/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/totto312)
@@ -28,6 +28,18 @@ I'm a platform engineer who enjoys making infrastructure boring (in a good way).
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
 
+## GitHub Stats
+
+<div align="center">
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=totto312&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=58a6ff&text_color=c9d1d9)
+
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=totto312&layout=compact&theme=dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9)
+
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=totto312&theme=dark&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff)
+
+</div>
+
 ## Projects
 
 | Project | Description |
@@ -38,14 +50,14 @@ I'm a platform engineer who enjoys making infrastructure boring (in a good way).
 ## Sydney Weather
 
 <!-- WEATHER:START -->
-| Time | Temp | Conditions |
-|:----:|:----:|:-----------|
-| 12:00 | 24°C | ☀️ clear sky |
-| 15:00 | 23°C | ☁️ broken clouds |
-| 18:00 | 24°C | ☁️ broken clouds |
-| 21:00 | 25°C | ⛅ scattered clouds |
-| 06:00 | 28°C | ☀️ clear sky |
-| 09:00 | 25°C | ⛅ scattered clouds |
+| | Time | Temp | Conditions |
+|:--|:----:|:----:|:-----------|
+| Today | 21:00 | 25°C | ⛅ scattered clouds |
+| Tmrw | 00:00 | 24°C | ☁️ broken clouds |
+| Tmrw | 03:00 | 23°C | ☁️ broken clouds |
+| Tmrw | 06:00 | 22°C | ☀️ clear sky |
+| Tmrw | 09:00 | 25°C | ☀️ clear sky |
+| Tmrw | 12:00 | 27°C | 🌤️ few clouds |
 <!-- WEATHER:END -->
 
 ---

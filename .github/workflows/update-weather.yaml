@@ -19,6 +19,7 @@ jobs:
       - name: Fetch weather data
         env:
           API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          TZ: Australia/Sydney
         run: |
           LAT="-33.8688"
           LON="151.2093"
@@ -48,17 +49,35 @@ jobs:
             esac
           }
 
-          # Create table header
-          echo "| Time | Temp | Conditions |" > weather.txt
-          echo "|:----:|:----:|:-----------|" >> weather.txt
+          # Get current timestamp
+          current_ts=$(date +%s)
+          today_date=$(TZ=Australia/Sydney date +%Y-%m-%d)
+          tomorrow_date=$(TZ=Australia/Sydney date -d "+1 day" +%Y-%m-%d)
 
-          # Extract and format weather data
-          echo "$response" | jq -r '
-            .list | map(select(.dt_txt | test("06:00:00$|09:00:00$|12:00:00$|15:00:00$|18:00:00$|21:00:00$")))[:6] |
-            .[] | "\(.dt_txt[11:16])|\(.main.temp | round)|\(.weather[0].description // "No data")"
-          ' | while IFS='|' read -r time temp desc; do
+          # Create table header
+          echo "| | Time | Temp | Conditions |" > weather.txt
+          echo "|:--|:----:|:----:|:-----------|" >> weather.txt
+
+          # Extract future forecasts and convert to Sydney time
+          echo "$response" | jq -r --argjson now "$current_ts" '
+            .list | map(select(.dt > $now)) | .[:6] |
+            .[] | "\(.dt)|\(.main.temp | round)|\(.weather[0].description // "No data")"
+          ' | while IFS='|' read -r timestamp temp desc; do
+            # Convert UTC timestamp to Sydney time
+            sydney_time=$(TZ=Australia/Sydney date -d "@$timestamp" +%H:%M)
+            sydney_date=$(TZ=Australia/Sydney date -d "@$timestamp" +%Y-%m-%d)
+
+            # Determine day label
+            if [[ "$sydney_date" == "$today_date" ]]; then
+              day_label="Today"
+            elif [[ "$sydney_date" == "$tomorrow_date" ]]; then
+              day_label="Tmrw"
+            else
+              day_label=$(TZ=Australia/Sydney date -d "@$timestamp" +%a)
+            fi
+
             emoji=$(get_emoji "$desc")
-            echo "| $time | ${temp}°C | $emoji $desc |" >> weather.txt
+            echo "| $day_label | $sydney_time | ${temp}°C | $emoji $desc |" >> weather.txt
           done
 
           echo "Formatted weather output:"
