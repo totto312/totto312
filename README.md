@@ -2,9 +2,9 @@
 
 # Hey, I'm Tom Nguyen
 
-**Software Engineer** @ [harrison.ai](https://harrison.ai)
+**Graduate Software Engineer** @ [harrison.ai](https://harrison.ai)
 
-Software engineer with experience and a keen interest in platforms.
+Building reliable systems and tinkering with AI on the side.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tom-nguyen25/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/totto312)
@@ -15,7 +15,7 @@ Software engineer with experience and a keen interest in platforms.
 
 ## About
 
-I'm a platform engineer who enjoys making infrastructure boring (in a good way). Previously interned at annalise.ai working on cloud infrastructure and developer tooling. Studied Computer Science with a focus on AI and Cloud Computing.
+Software engineer with experience and a keen interest in platforms. Previously interned at annalise.ai working on cloud infrastructure and developer tooling. Studied Computer Science with a focus on AI and Cloud Computing.
 
 ## Tech Stack
 
