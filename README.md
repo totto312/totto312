@@ -52,12 +52,12 @@ Software engineer with experience and a keen interest in platforms. Previously i
 <!-- WEATHER:START -->
 | | Time | Temp | Conditions |
 |:--|:----:|:----:|:-----------|
-| Today | 08:00 | 15°C | 🌧️ light rain |
-| Today | 11:00 | 18°C | 🌧️ light rain |
-| Today | 14:00 | 23°C | 🌤️ few clouds |
-| Today | 17:00 | 24°C | 🌤️ few clouds |
+| Today | 14:00 | 23°C | ☁️ broken clouds |
+| Today | 17:00 | 23°C | ⛅ scattered clouds |
 | Today | 20:00 | 20°C | 🌧️ light rain |
 | Today | 23:00 | 19°C | 🌧️ light rain |
+| Tmrw | 02:00 | 16°C | ☁️ overcast clouds |
+| Tmrw | 05:00 | 13°C | ☁️ overcast clouds |
 <!-- WEATHER:END -->
 
 ---
